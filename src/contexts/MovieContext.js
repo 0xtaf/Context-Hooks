@@ -1,25 +1,13 @@
-import React, { useState, createContext } from 'react';
-import {v4 as uuidv4} from 'uuid'
+import React, { createContext, useReducer } from 'react';
+import { movieReducer } from '../Reducers/movieReducer';
 
 export const MovieContext = createContext();
 
 const MovieContextProvider = (props) => {
-  const [movieList, setMovieList] = useState([
-    { name: 'Frost / Nixon', director: 'Ron Howard', id: 1 },
-    { name: 'Taking Sides', director: 'István Szabó', id: 2 },
-  ]);
-
-  const addMovie = (name, director) => {
-    setMovieList([...movieList, {name, director, id: uuidv4()}])
-  }
-
-  const deleteMovie = (id) => {
-    setMovieList(movieList.filter(movie => {
-      return movie.id !== id
-    }))
-  }
+  const [movieList, dispatch] = useReducer(movieReducer, [])
+  
   return (
-    <MovieContext.Provider value={{ movieList , addMovie, deleteMovie}}>
+    <MovieContext.Provider value={{ movieList, dispatch}}>
       {props.children}
     </MovieContext.Provider>
   );

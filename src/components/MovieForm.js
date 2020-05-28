@@ -3,13 +3,13 @@ import React, { useContext, useState } from 'react';
 import { MovieContext } from '../contexts/MovieContext';
 
 const MovieForm = () => {
-  const { addMovie } = useContext(MovieContext);
+  const { dispatch } = useContext(MovieContext);
   const [name, setName] = useState('');
   const [director, setDirector] = useState('');
 
   const handleSubmit =(e) => {
     e.preventDefault();
-    addMovie(name, director)
+    dispatch({type: 'ADD_MOVIE', movie: {name, director}})
     setName('')
     setDirector('')
   }
